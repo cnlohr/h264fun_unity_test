@@ -13,7 +13,10 @@ using UnityEngine.UI;
 
 public class H264funButton : UdonSharpBehaviour
 {
-	public VRCUnityVideoPlayer unityVideo;
+	public VRCAVProVideoPlayer unityVideo;
+	public GameObject stealTextureFrom;
+	public GameObject putTextureOn;
+	public RenderTexture renderTexture;
 	public Text textOut;
 	private int interact_count;
     public VRCUrl _videoURL;
@@ -32,6 +35,7 @@ public class H264funButton : UdonSharpBehaviour
 	{
 		interact_count++;
 		Debug.Log( "Play!" );
+		//unityVideo.renderTexture = renderTexture;
 		if( unityVideo.IsPlaying )
 		{
 			unityVideo.Stop();
@@ -49,6 +53,7 @@ public class H264funButton : UdonSharpBehaviour
 	{
 		float time = unityVideo.GetTime();
 		textOut.text = $"Unity Video\nTime: {time}\nPlaying: {unityVideo.IsPlaying}\nCount: {interact_count}";
+		putTextureOn.GetComponent<Renderer>().material.SetTexture( "_MainTex", stealTextureFrom.GetComponent<Renderer>().material.GetTexture("_MainTex") );
 	}
 	
 }
